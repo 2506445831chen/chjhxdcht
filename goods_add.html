@@ -1,0 +1,96 @@
+
+<div class="col-md-6" style="width: 100%">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title i18n" name="goods_add"></h3>
+        </div>
+        <form role="form" id="goods_addForm">
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="goodsInput" class="i18n" name="goods_name"></label>
+                    <input type="text"   name="productName" class="i18n-input form-control" selectattr="placeholder" selectname="goodsName_input" id="goodsInput" >
+                </div>
+                <div class="form-group">
+                    <label for="productPrice" class="i18n" name="productPrice"></label>
+                    <input type="number" class="form-control" oninput="if(value.length>5)value=value.slice(0,8)"  name="productPrice" id="productPrice" >
+                </div>
+                <div class="form-group">
+                    <label for="goodsInput" class="i18n" name="productDescription"></label>
+                    <input  type="text" class="form-control" name="productDescription" > </input>
+                </div>
+                <div class="form-group">
+                    <label name="categoryType"><trans oldtip="Select" newtip="选择">选择</trans></label>
+                    <select class="form-control" name="categoryType" id="categoryType">
+                        <option><trans oldtip="option 1" newtip="备选案文1">备选案文1</trans></option>
+                        <option><trans oldtip="option 2" newtip="备选案文2">备选案文2</trans></option>
+                        <option><trans oldtip="option 3" newtip="备选方案3">备选方案3</trans></option>
+                        <option><trans oldtip="option 4" newtip="备选案文4">备选案文4</trans></option>
+                        <option><trans oldtip="option 5" newtip="备选方案5">备选方案5</trans></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="TextBox2" class="i18n" name="chosePhoto">请选择图片</label>
+                    <input  name="file" class="form-control" type="file" id="TextBox2" >
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                <button type="button" onclick="submitProduct()" class="btn btn-primary i18n" name="Submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+<script>
+    categoryType();
+    select();
+    function categoryType() {
+        $.ajax({
+            type: "POST",
+            url: utl+"queryCategoryBySellerId",
+            dateType: 'json',
+            headers: {
+                token,
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                sellerId: sellid,
+            },
+            success: function (result) {
+                produce=errAlert(result);
+                // localStorage.setItem('products', result)
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+    function submitProduct() {
+        var storage=window.localStorage;
+        var token = storage["token"];
+        $('#goods_addForm').ajaxSubmit({
+            url : utl+'createProduct',
+            type : 'post',
+            dataType : 'json',
+            headers:
+                {
+                    "token":token
+                },
+            success:function (result) {
+               var data=errAlert(result);
+                if(!data){
+                    return
+                }else {
+                    datagoods();
+                    $.get("goods.html", function (data) {
+                        $("#screen").html(data);
+                    });
+                }
+            }
+        });
+
+    }
+    execI18n();
+</script>
+

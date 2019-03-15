@@ -1,0 +1,150 @@
+<style>
+   input{
+       border: none;
+   }
+    .box-info.active{
+        display: none;
+    }
+    .box-list.active{
+        display: none;
+    }
+
+</style>
+
+<div class="col-md-6" style="width: 100%">
+    <div class="box box-info active">
+        <div class="box-header with-border">
+            <h3 class="box-title i18n" name="Editorial content"> </h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" id="goodsFrom">
+            <div class="box-body">
+                <div class="form-group"  style="display: none">
+                    <label for="productId" class="col-sm-2 control-label i18n" name="goodsId"></label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="productId" id="productId" placeholder="goodsId">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productName" class="col-sm-2 control-label i18n" name="goods_name"></label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="productName" name="productName" placeholder="goodsName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="categoryType" class=" col-sm-2 control-label"><trans class="i18n"  name="categoryType">选择</trans></label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="categoryType" id="categoryType">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice" class="col-sm-2 control-label i18n" name="productPrice"></label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group" style="display: none">
+                    <label for="productStock" class="col-sm-2 control-label i18n" name="productStock"></label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="productStock" name="productStock" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group"  style="display: none">
+                    <label for="productStatus" class="col-sm-2 control-label i18n" name="productStatus"></label>
+
+                    <div class="col-sm-10">
+                        <input type="checkbox" checked="true" id="productStatus" name="productStatus" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription" class="col-sm-2 control-label i18n" name="productDescription"></label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="productDescription" name="productDescription" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group" style="display: none">
+                    <label for="changePhoto" class="col-sm-2 control-label i18n" name="photo">photo</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" name="productIcon" class="form-control" id="productIcon" placeholder="changePhoto">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="changePhoto" class="col-sm-2 control-label i18n" name="photo">photo</label>
+
+                    <div class="col-sm-10">
+                        <input type="file" name="file" class="form-control" id="changePhoto" placeholder="changePhoto">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div type="button"  onclick="closeGoods()" class="btn btn-default i18n" name="Cancel">Cancel</div>
+                <div type="button"  onclick="goodsSubmit()" class="btn btn-info pull-right i18n" name="Submit"></div>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+
+    <!-- general form elements -->
+    <div class="box box-list">
+        <div class="box-header">
+            <h3 class="box-title i18n" name="goods_list">商品列表</h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" id="goodsSearch" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right i18n-input" selectname="Search" selectattr="placeholder">
+
+                    <div class="input-group-btn">
+                        <button type="submit" onclick="searchGoods()"  class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="i18n" name="goods_name"></th>
+                    <th class="i18n" name="productPrice"></th>
+                    <th class="i18n" name="productDescription"></th>
+                    <th class="i18n" name="photo"> </th>
+                    <th  class="i18n" name="operation"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+</div>
+<script>
+    // //取消编辑
+    function closeGoods() {
+        $('.box-info').attr('class', 'box box-info active');
+        $('.box-list').attr('class','box box-list');
+        // window.open("goods.html","_blank");
+      return 1
+        // event.stopPropagation();
+    }
+    datagoods();
+    getarry1();
+    select();
+    execI18n();
+</script>
+

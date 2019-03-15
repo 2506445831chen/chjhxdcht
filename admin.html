@@ -1,0 +1,95 @@
+<div class="register-box">
+
+    <div class="register-box-body">
+        <p class="login-box-msg i18n" name="Adding new users">Adding new users</p>
+
+        <form action="##">
+            <div class="form-group has-feedback">
+                <input type="text" name="phone" id="PhoneName" class="i18n-input form-control" selectattr="placeholder"
+                       selectname="phone">
+                <span class="glyphicon  fa fa-fw fa-phone form-control-feedback" style="padding-right: 15px"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" name="name" id="userName" class="i18n-input form-control" selectattr="placeholder"
+                       selectname="name">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" name="password" id="surePassword" class="i18n-input form-control"
+                       selectattr="placeholder" selectname="password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="i18n-input form-control" id="Retype" selectattr="placeholder"
+                       selectname="Retype password">
+                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button type="button" onclick="login()" class="btn btn-primary btn-block btn-flat i18n"
+                            name="Submit">Register
+                    </button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+    </div>
+    <!-- /.form-box -->
+</div>
+<script>
+    function token2() {
+        var storage = window.localStorage;
+        token = storage["token"];
+        sellid=localStorage.getItem('sellerId')
+    }
+    function login() {
+        token2()
+        var phone = $('#PhoneName').val();
+        var password = $('#surePassword').val();
+        var username = $('#userName').val();
+        var RetypePassword = $('#Retype').val();
+        if (RetypePassword !== password) {
+            alert('两次输入密码不一致');
+            return
+        } else if (phone == '') {
+            alert('请输入你的号码');
+            return
+        } else if (username == '') {
+            alert('请输入你的名字');
+            return
+        }
+        var role = 1;
+        var openid = 122;
+        var data = {phone, password, username, role, openid};
+        $.ajax({
+            type: "POST",
+            url: utl + "createAdmin",
+            headers:{
+                token,
+            },
+            data: data,
+            success: function (result) {
+               var data= errAlert(result);
+                console.log(result);
+                if (data == 1) {
+                    alert('注册成功');
+
+                }
+                if(data==0){
+                    alert('电话已被注册');
+                }
+
+            },
+            error: function () {
+                alert("账号已被注册。");
+            }
+        });
+    }
+    execI18n();
+</script>

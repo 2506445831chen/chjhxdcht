@@ -1,0 +1,103 @@
+<div class="pad margin no-print">
+    <div class="callout callout-info" style="margin-bottom: 0!important;">
+        <h4><i class="fa fa-info"></i><trans oldtip=" Note:" newtip="注：">注：</trans></h4><trans oldtip=" This page has been enhanced for printing. Click the print button at the bottom of the invoice to test. " newtip="此页已增强以供打印。单击发票底部的“打印”按钮进行测试。">此页已增强以供打印。单击发票底部的“打印”按钮进行测试。</trans></div>
+</div>
+
+
+
+    <!--startprint1-->
+
+    <!--打印内容开始-->
+<section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <i class="fa fa-globe"></i><trans>汇金华夏有限公司</trans><small class="pull-right">
+                <trans id="orderData" oldtip="Date: 2/10/2014" newtip="日期：2014年10月2日" style=""></trans></small>
+            </h2>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!--order header -->
+    <div class="row invoice-info">
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Table row -->
+    <div class="row" id="orderList">
+        <div class="col-xs-12 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><trans oldtip="Qty" newtip="质量">数量</trans></th>
+                    <th><trans oldtip="Product" newtip="产品">产品名称</trans></th>
+                    <th><trans oldtip="Subtotal" newtip="小计">单价</trans></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+
+
+        <div class="col-xs-6">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody class="tbody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!--打印内容结束-->
+
+    <!--endprint1-->
+
+    <div class="row no-print">
+        <div class="col-xs-12">
+            <a class="btn btn-default" onclick="backOrder()"><trans class="i18n" name="">取消</trans></a>
+            <button type="button" class="btn btn-success pull-right">
+                <trans  onclick=orderSuccess()> 确认并打印 </trans>
+            </button>
+            <button type="button" class="btn btn-google pull-right" style="margin-right: 5px;">
+                <trans onclick="cancelOrder()"> 退单 </trans>
+            </button>
+        </div>
+    </div>
+</section>
+<script>
+    var order=orderEvery;
+    var time=order.orderCreatTime;
+    time=getLocalTime(time);
+    $('.invoice-info').append(` <div class="col-sm-12 invoice-col">
+            <b><trans oldtip="Order ID:" newtip="订单ID：" style="">订单ID：</trans></b><trans oldtip=" 4F3S8J" newtip="4F3S8J">${order.productInfos[0].orderId.slice(-4)}</trans><br>
+            <b><trans oldtip="Payment Due:" newtip="应付付款：" style="">应付付款：</trans></b>${order.totalAmount} <br>
+        </div>`);
+    $('#orderData').html( `${time}`);
+   for(var i=0;i<order.productInfos.length;i++){
+    $('#orderList tbody').append(`
+                <tr>
+                    <td>${order.productInfos[i].productQuantity}</td>
+                    <td><trans oldtip="Call of Duty" >${order.productInfos[i].productName}</trans></td>
+                    <td>${order.productInfos[i].productPrice}</td>
+                </tr>
+
+    `);
+   }
+   $('.table-responsive .table .tbody').append(`
+                    <tr>
+                        <th><trans oldtip="Total:" newtip="共计：">共计：</trans></th>
+                        <td>￥${order.totalAmount}</td>
+               </tr>
+   `)
+
+</script>

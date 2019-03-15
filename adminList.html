@@ -1,0 +1,89 @@
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title"><trans class="i18n" name="Administrator Information">商户信息</trans></h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th class="i18n" name="User name">用户名称</th>
+                <th><trans class="i18n" name="phone">电话</trans></th>
+                <th><trans class="i18n" name="operation" >操作</trans></th>
+            </tr>
+            </thead>
+            <tbody id="adminList">
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+<script>
+    // 信息的获取
+
+    var admin=[];
+    getAdmin();
+    function token2() {
+        var storage = window.localStorage;
+        token = storage["token"];
+        sellid=localStorage.getItem('sellerId')
+    }
+    function getAdmin() {
+        token2();
+        $.ajax({
+            type: "POST",
+            url: utl+ "showAllUserByRole",
+            dateType: 'json',
+            headers: {
+                token,
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                role:0,
+            },
+            success: function (result) {
+                admin = errAlert(result);
+
+                adminList();
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+//    页面显示
+    function adminList() {
+        $('#adminList tr').remove();
+        for(var i=0;i<admin.length;i++){
+            $('#adminList').append(`
+          <tr>
+                <td><trans >${admin[i].username}</trans></td>
+                <td><trans>${admin[i].phone}</trans></td>
+                <td><button onclick="deleteAdmin('${admin[i].id}') ">删除</button></td>
+            </tr>
+        `)
+        }
+    }
+    function deleteAdmin(id) {
+        $.ajax({
+            type: "POST",
+            url: utl+ "removeUserById",
+            dateType: 'json',
+            headers: {
+                token,
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            data: {
+                id:id,
+            },
+            success: function (result) {
+                getAdmin();
+            },
+            error: function () {
+                alert("异常！");
+            }
+        })
+    }
+    execI18n();
+</script>
